@@ -17,6 +17,7 @@
 
 	aliases {
 		pwmled0 = &green_pwm_led;
+		uart0 = &usart1;
 	};
 
 };
@@ -36,4 +37,14 @@
 	/omit-if-no-ref/ tim1_ch1_pwm_out_pe9: tim1_ch1_pwm_out_pe9 {
 				pinmux = <STM32F1_PINMUX('E', 9, ALTERNATE, TIM1_REMAP2)>;
 			};
+};
+
+&usart1 {
+	dmas = <&dma1 4 (STM32_DMA_PERIPH_TX | STM32_DMA_PRIORITY_HIGH)>,
+	       <&dma1 5 (STM32_DMA_PERIPH_RX | STM32_DMA_PRIORITY_HIGH)>;
+	dma-names = "tx", "rx";
+};
+
+&dma1 {
+	status = "okay";
 };
